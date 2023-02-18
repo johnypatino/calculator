@@ -8,6 +8,9 @@ var multiply = function(x,y) {
     return x * y;
 }
 var divide = function(x,y) {
+    if (y === 0) {
+        return 'bruh';
+    }
     return x / y;
 }
 var operate = function(operator, x, y) {
@@ -19,14 +22,15 @@ var operate = function(operator, x, y) {
         default: break;
     }
 }
-let x = 0;
-let y = 0;
+let x = false;
+let y = false;
 let op = 0;
 let reset = true;
 const screen = document.querySelector('.ans');
 const button = document.querySelectorAll('.button');
 const operator = document.querySelectorAll('.operator');
 const equal = document.querySelector('.equal');
+const clear = document.querySelector('#Clear');
 for (let i = 0; i < button.length; i++ ) {
    button[i].addEventListener('click', ()=> {
     if (reset === true) {
@@ -36,6 +40,7 @@ for (let i = 0; i < button.length; i++ ) {
         let display = button[i].textContent;
         screen.textContent = screen.textContent + display;
         console.log(button[i].textContent);
+        console.log(y);
     })
 }
 for (let i = 0; i < operator.length; i++) {
@@ -50,22 +55,30 @@ for (let i = 0; i < operator.length; i++) {
 }
 
 var store = function(num) {
-    if (num != 0) {
-        if (x === 0) {
+    
+        if (x === false) {
             x = num;
         }
         else {
             y = num;
         }
-    }
-}
+    
+};
 equal.addEventListener('click', ()=> {
     store(screen.textContent);
-    if (x != 0 && y !=0) {
+    if (y === false) { y = 0;}
         x = parseInt(x);
         y = parseInt(y);
        let ans = operate(op,x,y);
        screen.textContent = ans;
-    }
+       if (ans === 'bruh') { ans = 0;}
+       x = ans;
+       y = 0;
+});
+clear.addEventListener('click',function() {
+    screen.textContent = '0';
+     x = false;
+     y = false;
+     op = 0;
+     reset = true;
 })
-
