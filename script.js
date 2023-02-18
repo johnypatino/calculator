@@ -31,6 +31,7 @@ const button = document.querySelectorAll('.button');
 const operator = document.querySelectorAll('.operator');
 const equal = document.querySelector('.equal');
 const clear = document.querySelector('#Clear');
+const left = document.querySelector('.left');
 for (let i = 0; i < button.length; i++ ) {
    button[i].addEventListener('click', ()=> {
     if (reset === true) {
@@ -40,13 +41,14 @@ for (let i = 0; i < button.length; i++ ) {
         let display = button[i].textContent;
         screen.textContent = screen.textContent + display;
         console.log(button[i].textContent);
-        console.log(y);
+        left.textContent = left.textContent + button[i].textContent;
     })
 }
 for (let i = 0; i < operator.length; i++) {
     operator[i].addEventListener('click', ()=> {
         store(screen.textContent);
         op = operator[i].textContent;
+        left.textContent += ` ${operator[i].textContent} `;
         reset = true;
         console.log(op);
         console.log(x);
@@ -66,6 +68,7 @@ var store = function(num) {
 };
 equal.addEventListener('click', ()=> {
     store(screen.textContent);
+    left.textContent = '';
     if (y === false) { y = 0;}
         x = parseInt(x);
         y = parseInt(y);
@@ -77,8 +80,10 @@ equal.addEventListener('click', ()=> {
 });
 clear.addEventListener('click',function() {
     screen.textContent = '0';
+    left.textContent = ''
      x = false;
      y = false;
      op = 0;
      reset = true;
+
 })
